@@ -84,37 +84,37 @@ export function PasskeyManager() {
   const isPasskeyLimitReached = activePasskeys.length >= 3;
 
   return (
-    <div className="space-y-8 max-w-4xl">
+    <div className="space-y-6 max-w-4xl w-full px-2 sm:px-0">
       {/* Header */}
-      <div className="pb-6 border-b border-[#4b4640] flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+      <div className="pb-4 sm:pb-6 border-b border-[#4b4640] flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="font-garamond text-[30px] sm:text-[40px] md:text-[52px] leading-[1.1] text-[#e6e2e0] mb-3">
+          <h2 className="font-garamond text-[24px] sm:text-[30px] md:text-[40px] leading-[1.1] text-[#e6e2e0] mb-2 sm:mb-3">
             Registered Passkeys
           </h2>
-          <p className="font-sans text-[14px] sm:text-[15px] text-[#cdc5bd] max-w-2xl">
-            Manage your registered WebAuthn hardware passkeys (Touch ID, Face ID, YubiKey) and register new biometric security keys with a strict 3-passkey limit cap.
+          <p className="font-sans text-[13px] sm:text-[14px] text-[#cdc5bd]">
+            Manage WebAuthn hardware passkeys (Touch ID, Face ID, YubiKey) with strict 3-passkey limit.
           </p>
         </div>
         <button
           onClick={fetchPasskeys}
           disabled={loading}
           title="Refresh Registered Passkeys"
-          className="p-2.5 border border-[#4b4640] text-[#e6e2e0] hover:bg-[#363433] hover:border-[#cac6c3] transition-colors flex items-center justify-center rounded-full cursor-pointer disabled:opacity-50 shrink-0 self-start mt-2"
+          className="p-2 border border-[#4b4640] text-[#e6e2e0] hover:bg-[#363433] hover:border-[#cac6c3] transition-colors flex items-center justify-center rounded-full cursor-pointer disabled:opacity-50 shrink-0 self-start"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
         </button>
       </div>
 
       {/* Mini Security Architecture Context Card */}
-      <div className="p-5 border border-[#4b4640] bg-[#141312] rounded-none space-y-3">
-        <div className="flex items-center gap-2 text-[#ffcc80] font-space-mono text-[12px] font-bold tracking-widest uppercase">
-          <Info className="w-4 h-4" />
-          <span>WebAuthn Hardware Passkeys Architecture (Max 3 Limit)</span>
+      <div className="p-3 sm:p-5 border border-[#4b4640] bg-[#141312] rounded-none space-y-2 sm:space-y-3">
+        <div className="flex items-center gap-2 text-[#ffcc80] font-space-mono text-[10px] sm:text-[12px] font-bold tracking-widest uppercase">
+          <Info className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <span>WebAuthn Hardware Passkeys (Max 3)</span>
         </div>
-        <div className="pt-1 font-sans text-[13px] text-[#cdc5bd]">
-          <div className="p-3 border border-[#4b4640]/60 bg-[#0f0e0d]">
-            <span className="font-space-mono text-[11px] font-bold text-[#ffcc80] block mb-1">Hardware Passkeys &amp; Biometrics</span>
-            WebAuthn credentials bound to your device hardware security chip (Touch ID, Face ID, Windows Hello, YubiKey). Each passkey provides zero-knowledge cryptographic proof to unlock your vault identity without transmitting master secrets.
+        <div className="pt-1 font-sans text-[12px] sm:text-[13px] text-[#cdc5bd]">
+          <div className="p-2 sm:p-3 border border-[#4b4640]/60 bg-[#0f0e0d]">
+            <span className="font-space-mono text-[10px] sm:text-[11px] font-bold text-[#ffcc80] block mb-1">Hardware Passkeys &amp; Biometrics</span>
+            <span className="text-[11px] sm:text-[12px]">WebAuthn credentials bound to device hardware security (Touch ID, Face ID, Windows Hello, YubiKey). Zero-knowledge cryptographic proof without transmitting master secrets.</span>
           </div>
         </div>
       </div>
@@ -136,49 +136,49 @@ export function PasskeyManager() {
 
       {/* Registered WebAuthn Passkeys List */}
       <div className="border border-[#4b4640]">
-        <div className="px-6 py-4 border-b border-[#4b4640] flex justify-between items-center bg-[#181716] flex-wrap gap-2">
-          <span className="font-space-mono text-[11px] font-bold tracking-widest text-[#ffcc80] uppercase">
-            Registered Passkeys ({activePasskeys.length} / 3 Registered)
+        <div className="px-3 sm:px-6 py-3 sm:py-4 border-b border-[#4b4640] flex justify-between items-center bg-[#181716] flex-wrap gap-2">
+          <span className="font-space-mono text-[9px] sm:text-[11px] font-bold tracking-widest text-[#ffcc80] uppercase">
+            Passkeys ({activePasskeys.length} / 3)
           </span>
-          <span className="font-space-mono text-[10px] text-[#ffcc80] font-bold">WEBAUTHN HARDWARE KEYS</span>
+          <span className="font-space-mono text-[8px] sm:text-[10px] text-[#ffcc80] font-bold">WEBAUTHN KEYS</span>
         </div>
 
         {loading ? (
-          <div className="p-10 text-center font-space-mono text-[13px] text-[#636363]">Loading passkeys...</div>
+          <div className="p-6 sm:p-10 text-center font-space-mono text-[12px] sm:text-[13px] text-[#636363]">Loading passkeys...</div>
         ) : devices.length === 0 ? (
-          <div className="p-10 text-center font-space-mono text-[13px] text-[#636363]">No hardware passkeys registered yet.</div>
+          <div className="p-6 sm:p-10 text-center font-space-mono text-[12px] sm:text-[13px] text-[#636363]">No hardware passkeys registered yet.</div>
         ) : (
           <div className="divide-y divide-[#4b4640]">
             {devices.map((device) => (
-              <div key={device.id} className="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 border border-[#4b4640] bg-[#201f1e] flex items-center justify-center shrink-0 mt-0.5">
-                    <Fingerprint className="w-5 h-5 text-[#ffcc80]" />
+              <div key={device.id} className="px-3 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 border border-[#4b4640] bg-[#201f1e] flex items-center justify-center shrink-0 mt-0.5">
+                    <Fingerprint className="w-4 h-4 sm:w-5 sm:h-5 text-[#ffcc80]" />
                   </div>
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-3 flex-wrap">
-                      <h4 className="font-sans text-[16px] font-bold text-[#e6e2e0]">{device.name}</h4>
+                  <div className="space-y-1.5 min-w-0 flex-1">
+                    <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                      <h4 className="font-sans text-[14px] sm:text-[16px] font-bold text-[#e6e2e0] truncate">{device.name}</h4>
                       {device.revoked_at ? (
-                        <span className="px-2 py-0.5 border border-[#ffb4ab]/40 text-[#ffb4ab] font-space-mono text-[10px] font-bold tracking-widest uppercase">
+                        <span className="px-1.5 sm:px-2 py-0.5 border border-[#ffb4ab]/40 text-[#ffb4ab] font-space-mono text-[8px] sm:text-[10px] font-bold tracking-widest uppercase whitespace-nowrap">
                           REVOKED
                         </span>
                       ) : (
-                        <span className="px-2 py-0.5 border border-[#ffcc80]/40 text-[#ffcc80] font-space-mono text-[10px] font-bold tracking-widest uppercase">
-                          HARDWARE PASSKEY
+                        <span className="px-1.5 sm:px-2 py-0.5 border border-[#ffcc80]/40 text-[#ffcc80] font-space-mono text-[8px] sm:text-[10px] font-bold tracking-widest uppercase whitespace-nowrap">
+                          PASSKEY
                         </span>
                       )}
                     </div>
-                    <div className="flex flex-wrap gap-4 font-space-mono text-[11px] text-[#969088]">
+                    <div className="flex flex-wrap gap-2 sm:gap-4 font-space-mono text-[10px] sm:text-[11px] text-[#969088]">
                       <span className="flex items-center gap-1.5">
-                        <Fingerprint className="w-3 h-3" />
-                        Credential: {truncateId(device.credential_id)}
+                        <Fingerprint className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                        <span className="truncate">Cred: {truncateId(device.credential_id)}</span>
                       </span>
                       <span className="flex items-center gap-1.5">
-                        <Calendar className="w-3 h-3" />
-                        Registered: {new Date(device.created_at).toLocaleDateString()}
+                        <Calendar className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                        <span className="hidden sm:inline">Registered: </span>{new Date(device.created_at).toLocaleDateString()}
                       </span>
-                      <span className="flex items-center gap-1.5">
-                        <Clock className="w-3 h-3" />
+                      <span className="flex items-center gap-1.5 w-full sm:w-auto">
+                        <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                         Last Active: {new Date(device.last_seen_at).toLocaleString()}
                       </span>
                     </div>
@@ -188,10 +188,10 @@ export function PasskeyManager() {
                 {!device.revoked_at && (
                   <button
                     onClick={() => handleRevokePasskey(device.id)}
-                    className="font-space-mono text-[11px] text-[#ffb4ab] hover:text-[#e6e2e0] transition-colors cursor-pointer flex items-center gap-1.5 self-start sm:self-auto shrink-0"
+                    className="font-space-mono text-[10px] sm:text-[11px] text-[#ffb4ab] hover:text-[#e6e2e0] transition-colors cursor-pointer flex items-center gap-1.5 self-start sm:self-auto shrink-0"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
-                    <span>Revoke Passkey</span>
+                    <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                    <span>Revoke</span>
                   </button>
                 )}
               </div>

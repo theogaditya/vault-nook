@@ -99,41 +99,41 @@ export function DeviceManager() {
   const activePhysical = physicalDevices.filter(p => !p.revoked_at);
 
   return (
-    <div className="space-y-8 max-w-4xl">
+    <div className="space-y-6 max-w-4xl w-full px-2 sm:px-0">
       {/* Header */}
-      <div className="pb-6 border-b border-[#4b4640] flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+      <div className="pb-4 sm:pb-6 border-b border-[#4b4640] flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="font-garamond text-[30px] sm:text-[40px] md:text-[52px] leading-[1.1] text-[#e6e2e0] mb-3">
+          <h2 className="font-garamond text-[24px] sm:text-[30px] md:text-[40px] leading-[1.1] text-[#e6e2e0] mb-2 sm:mb-3">
             Trusted Security Devices &amp; Sessions
           </h2>
-          <p className="font-sans text-[14px] sm:text-[15px] text-[#cdc5bd] max-w-2xl">
-            Manage your registered physical devices and active browser sessions with strict 3-device ceilings.
+          <p className="font-sans text-[13px] sm:text-[14px] text-[#cdc5bd]">
+            Manage registered devices and active sessions with strict 3-device ceilings.
           </p>
         </div>
         <button
           onClick={fetchDevices}
           disabled={loading}
           title="Refresh Trusted Devices & Sessions"
-          className="p-2.5 border border-[#4b4640] text-[#e6e2e0] hover:bg-[#363433] hover:border-[#cac6c3] transition-colors flex items-center justify-center rounded-full cursor-pointer disabled:opacity-50 shrink-0 self-start mt-2"
+          className="p-2 border border-[#4b4640] text-[#e6e2e0] hover:bg-[#363433] hover:border-[#cac6c3] transition-colors flex items-center justify-center rounded-full cursor-pointer disabled:opacity-50 shrink-0 self-start"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
         </button>
       </div>
 
       {/* Mini Security Architecture Context Card */}
-      <div className="p-5 border border-[#4b4640] bg-[#141312] rounded-none space-y-3">
-        <div className="flex items-center gap-2 text-[#EAB308] font-space-mono text-[12px] font-bold tracking-widest uppercase">
-          <Info className="w-4 h-4" />
-          <span>Security Controls Breakdown (Max 3 Limit Each)</span>
+      <div className="p-3 sm:p-5 border border-[#4b4640] bg-[#141312] rounded-none space-y-2 sm:space-y-3">
+        <div className="flex items-center gap-2 text-[#EAB308] font-space-mono text-[10px] sm:text-[12px] font-bold tracking-widest uppercase">
+          <Info className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <span>Security Controls (Max 3 Limit Each)</span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1 font-sans text-[13px] text-[#cdc5bd]">
-          <div className="p-3 border border-[#4b4640]/60 bg-[#0f0e0d]">
-            <span className="font-space-mono text-[11px] font-bold text-[#a5d6a7] block mb-1">1. Registered Devices (Max 3)</span>
-            Persistent physical hardware (PCs, phones) registered to your vault. Stays registered even when logged out.
+        <div className="grid grid-cols-1 gap-2 sm:gap-4 pt-1 font-sans text-[12px] sm:text-[13px] text-[#cdc5bd]">
+          <div className="p-2 sm:p-3 border border-[#4b4640]/60 bg-[#0f0e0d]">
+            <span className="font-space-mono text-[10px] sm:text-[11px] font-bold text-[#a5d6a7] block mb-1">1. Registered Devices (Max 3)</span>
+            <span className="text-[11px] sm:text-[12px]">Persistent physical hardware (PCs, phones) registered to your vault.</span>
           </div>
-          <div className="p-3 border border-[#4b4640]/60 bg-[#0f0e0d]">
-            <span className="font-space-mono text-[11px] font-bold text-[#8c9eff] block mb-1">2. Active Sessions (Max 3)</span>
-            Live HTTP browser logins active right now. Revoking a session immediately logs out that browser.
+          <div className="p-2 sm:p-3 border border-[#4b4640]/60 bg-[#0f0e0d]">
+            <span className="font-space-mono text-[10px] sm:text-[11px] font-bold text-[#8c9eff] block mb-1">2. Active Sessions (Max 3)</span>
+            <span className="text-[11px] sm:text-[12px]">Live HTTP browser logins. Revoking logs out that browser immediately.</span>
           </div>
         </div>
       </div>
@@ -155,59 +155,59 @@ export function DeviceManager() {
 
       {/* 1. Persistent Registered Physical Devices List */}
       <div className="border border-[#4b4640]">
-        <div className="px-6 py-4 border-b border-[#4b4640] flex justify-between items-center bg-[#181716] flex-wrap gap-2">
+        <div className="px-3 sm:px-6 py-3 sm:py-4 border-b border-[#4b4640] flex justify-between items-center bg-[#181716] flex-wrap gap-2">
           <div className="flex items-center gap-2">
-            <HardDrive className="w-4 h-4 text-[#a5d6a7]" />
-            <span className="font-space-mono text-[11px] font-bold tracking-widest text-[#e6e2e0] uppercase">
-              Registered Physical Devices ({activePhysical.length} / 3 Registered)
+            <HardDrive className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#a5d6a7]" />
+            <span className="font-space-mono text-[9px] sm:text-[11px] font-bold tracking-widest text-[#e6e2e0] uppercase">
+              Registered Devices ({activePhysical.length} / 3)
             </span>
           </div>
-          <span className="font-space-mono text-[10px] text-[#a5d6a7] font-bold">PERSISTENT HARDWARE REGISTRY</span>
+          <span className="font-space-mono text-[8px] sm:text-[10px] text-[#a5d6a7] font-bold">HARDWARE REGISTRY</span>
         </div>
 
         {loading ? (
-          <div className="p-10 text-center font-space-mono text-[13px] text-[#636363]">Loading physical devices...</div>
+          <div className="p-6 sm:p-10 text-center font-space-mono text-[12px] sm:text-[13px] text-[#636363]">Loading physical devices...</div>
         ) : activePhysical.length === 0 ? (
-          <div className="p-10 text-center font-space-mono text-[13px] text-[#636363]">No physical devices registered yet.</div>
+          <div className="p-6 sm:p-10 text-center font-space-mono text-[12px] sm:text-[13px] text-[#636363]">No physical devices registered yet.</div>
         ) : (
           <div className="divide-y divide-[#4b4640]">
             {activePhysical.map((device) => {
               const uaMeta = parseUserAgent(device.user_agent || '');
               const isSessionActive = activeSessions.some(s => s.user_agent === device.user_agent);
               return (
-                <div key={device.id} className="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 border border-[#4b4640] bg-[#201f1e] flex items-center justify-center shrink-0 mt-0.5">
+                <div key={device.id} className="px-3 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 border border-[#4b4640] bg-[#201f1e] flex items-center justify-center shrink-0 mt-0.5">
                       {uaMeta.isMobile ? (
-                        <Smartphone className="w-5 h-5 text-[#a5d6a7]" />
+                        <Smartphone className="w-4 h-4 sm:w-5 sm:h-5 text-[#a5d6a7]" />
                       ) : (
-                        <Laptop className="w-5 h-5 text-[#a5d6a7]" />
+                        <Laptop className="w-4 h-4 sm:w-5 sm:h-5 text-[#a5d6a7]" />
                       )}
                     </div>
-                    <div className="space-y-1.5">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h4 className="font-sans text-[16px] font-bold text-[#e6e2e0]">{device.name || uaMeta.label}</h4>
+                    <div className="space-y-1.5 min-w-0 flex-1">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                        <h4 className="font-sans text-[14px] sm:text-[16px] font-bold text-[#e6e2e0] truncate">{device.name || uaMeta.label}</h4>
                         {isSessionActive ? (
-                          <span className="px-2 py-0.5 border border-[#a5d6a7]/40 bg-[#a5d6a7]/10 text-[#a5d6a7] font-space-mono text-[10px] font-bold tracking-widest uppercase">
-                            LOGGED IN (ACTIVE)
+                          <span className="px-1.5 sm:px-2 py-0.5 border border-[#a5d6a7]/40 bg-[#a5d6a7]/10 text-[#a5d6a7] font-space-mono text-[8px] sm:text-[10px] font-bold tracking-widest uppercase whitespace-nowrap">
+                            LOGGED IN
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 border border-[#4b4640] bg-[#201f1e] text-[#969088] font-space-mono text-[10px] font-bold tracking-widest uppercase">
-                            LOGGED OUT (REGISTERED)
+                          <span className="px-1.5 sm:px-2 py-0.5 border border-[#4b4640] bg-[#201f1e] text-[#969088] font-space-mono text-[8px] sm:text-[10px] font-bold tracking-widest uppercase whitespace-nowrap">
+                            LOGGED OUT
                           </span>
                         )}
                       </div>
-                      <div className="flex flex-wrap gap-4 font-space-mono text-[11px] text-[#969088]">
+                      <div className="flex flex-wrap gap-2 sm:gap-4 font-space-mono text-[10px] sm:text-[11px] text-[#969088]">
                         <span className="flex items-center gap-1.5">
-                          <Globe className="w-3 h-3" />
-                          IP: {device.ip_address || '127.0.0.1'}
+                          <Globe className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                          <span className="truncate">IP: {device.ip_address || '127.0.0.1'}</span>
                         </span>
                         <span className="flex items-center gap-1.5">
-                          <Calendar className="w-3 h-3" />
-                          First Connected: {new Date(device.created_at).toLocaleDateString()}
+                          <Calendar className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                          <span className="hidden sm:inline">First Connected: </span>{new Date(device.created_at).toLocaleDateString()}
                         </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="w-3 h-3" />
+                        <span className="flex items-center gap-1.5 w-full sm:w-auto">
+                          <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           Last Seen: {new Date(device.last_seen_at).toLocaleString()}
                         </span>
                       </div>
@@ -216,10 +216,10 @@ export function DeviceManager() {
 
                   <button
                     onClick={() => handleRevokeItem(device.id, 'physical')}
-                    className="font-space-mono text-[11px] text-[#ffb4ab] hover:text-[#e6e2e0] transition-colors cursor-pointer flex items-center gap-1.5 self-start sm:self-auto shrink-0"
+                    className="font-space-mono text-[10px] sm:text-[11px] text-[#ffb4ab] hover:text-[#e6e2e0] transition-colors cursor-pointer flex items-center gap-1.5 self-start sm:self-auto shrink-0"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
-                    <span>Revoke Device</span>
+                    <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                    <span>Revoke</span>
                   </button>
                 </div>
               );
@@ -230,56 +230,56 @@ export function DeviceManager() {
 
       {/* 2. Active Logged-In Device Sessions */}
       <div className="border border-[#4b4640]">
-        <div className="px-6 py-4 border-b border-[#4b4640] flex justify-between items-center bg-[#181716] flex-wrap gap-2">
-          <span className="font-space-mono text-[11px] font-bold tracking-widest text-[#8c9eff] uppercase">
-            Active Logged-In Sessions ({activeSessions.length} / 3 Active)
+        <div className="px-3 sm:px-6 py-3 sm:py-4 border-b border-[#4b4640] flex justify-between items-center bg-[#181716] flex-wrap gap-2">
+          <span className="font-space-mono text-[9px] sm:text-[11px] font-bold tracking-widest text-[#8c9eff] uppercase">
+            Active Sessions ({activeSessions.length} / 3)
           </span>
-          <span className="font-space-mono text-[10px] text-[#8c9eff] font-bold">LIVE HTTP TOKENS</span>
+          <span className="font-space-mono text-[8px] sm:text-[10px] text-[#8c9eff] font-bold">LIVE TOKENS</span>
         </div>
 
         {loading ? (
-          <div className="p-10 text-center font-space-mono text-[13px] text-[#636363]">Loading active sessions...</div>
+          <div className="p-6 sm:p-10 text-center font-space-mono text-[12px] sm:text-[13px] text-[#636363]">Loading active sessions...</div>
         ) : activeSessions.length === 0 ? (
-          <div className="p-10 text-center font-space-mono text-[13px] text-[#636363]">No active sessions found.</div>
+          <div className="p-6 sm:p-10 text-center font-space-mono text-[12px] sm:text-[13px] text-[#636363]">No active sessions found.</div>
         ) : (
           <div className="divide-y divide-[#4b4640]">
             {activeSessions.map((session) => {
               const uaMeta = parseUserAgent(session.user_agent || '');
               const isCurrent = session.id === currentSessionId;
               return (
-                <div key={session.id} className="px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 border border-[#4b4640] bg-[#201f1e] flex items-center justify-center shrink-0 mt-0.5">
+                <div key={session.id} className="px-3 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 border border-[#4b4640] bg-[#201f1e] flex items-center justify-center shrink-0 mt-0.5">
                       {uaMeta.isMobile ? (
-                        <Smartphone className="w-5 h-5 text-[#8c9eff]" />
+                        <Smartphone className="w-4 h-4 sm:w-5 sm:h-5 text-[#8c9eff]" />
                       ) : (
-                        <Laptop className="w-5 h-5 text-[#8c9eff]" />
+                        <Laptop className="w-4 h-4 sm:w-5 sm:h-5 text-[#8c9eff]" />
                       )}
                     </div>
-                    <div className="space-y-1.5">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h4 className="font-sans text-[16px] font-bold text-[#e6e2e0]">{uaMeta.label}</h4>
+                    <div className="space-y-1.5 min-w-0 flex-1">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                        <h4 className="font-sans text-[14px] sm:text-[16px] font-bold text-[#e6e2e0] truncate">{uaMeta.label}</h4>
                         {isCurrent ? (
-                          <span className="px-2 py-0.5 border border-[#a5d6a7]/40 bg-[#a5d6a7]/10 text-[#a5d6a7] font-space-mono text-[10px] font-bold tracking-widest uppercase">
-                            CURRENT DEVICE
+                          <span className="px-1.5 sm:px-2 py-0.5 border border-[#a5d6a7]/40 bg-[#a5d6a7]/10 text-[#a5d6a7] font-space-mono text-[8px] sm:text-[10px] font-bold tracking-widest uppercase whitespace-nowrap">
+                            CURRENT
                           </span>
                         ) : (
-                          <span className="px-2 py-0.5 border border-[#4b4640] bg-[#201f1e] text-[#cdc5bd] font-space-mono text-[10px] font-bold tracking-widest uppercase">
-                            ACTIVE SESSION
+                          <span className="px-1.5 sm:px-2 py-0.5 border border-[#4b4640] bg-[#201f1e] text-[#cdc5bd] font-space-mono text-[8px] sm:text-[10px] font-bold tracking-widest uppercase whitespace-nowrap">
+                            ACTIVE
                           </span>
                         )}
                       </div>
-                      <div className="flex flex-wrap gap-4 font-space-mono text-[11px] text-[#969088]">
+                      <div className="flex flex-wrap gap-2 sm:gap-4 font-space-mono text-[10px] sm:text-[11px] text-[#969088]">
                         <span className="flex items-center gap-1.5">
-                          <Globe className="w-3 h-3" />
-                          IP: {session.ip_address || '127.0.0.1'}
+                          <Globe className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                          <span className="truncate">IP: {session.ip_address || '127.0.0.1'}</span>
                         </span>
                         <span className="flex items-center gap-1.5">
-                          <Calendar className="w-3 h-3" />
-                          Logged In: {new Date(session.created_at).toLocaleDateString()}
+                          <Calendar className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                          <span className="hidden sm:inline">Logged In: </span>{new Date(session.created_at).toLocaleDateString()}
                         </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock className="w-3 h-3" />
+                        <span className="flex items-center gap-1.5 w-full sm:w-auto">
+                          <Clock className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           Last Active: {new Date(session.last_seen_at).toLocaleString()}
                         </span>
                       </div>
@@ -289,10 +289,10 @@ export function DeviceManager() {
                   {!isCurrent && (
                     <button
                       onClick={() => handleRevokeItem(session.id, 'session')}
-                      className="font-space-mono text-[11px] text-[#ffb4ab] hover:text-[#e6e2e0] transition-colors cursor-pointer flex items-center gap-1.5 self-start sm:self-auto shrink-0"
+                      className="font-space-mono text-[10px] sm:text-[11px] text-[#ffb4ab] hover:text-[#e6e2e0] transition-colors cursor-pointer flex items-center gap-1.5 self-start sm:self-auto shrink-0"
                     >
-                      <LogOut className="w-3.5 h-3.5" />
-                      <span>Revoke Session</span>
+                      <LogOut className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                      <span>Revoke</span>
                     </button>
                   )}
                 </div>
