@@ -90,7 +90,6 @@ export function DocumentViewerModal({
     return /android|iphone|ipad|ipod|mobile/i.test(ua);
   }, []);
 
-  const isAndroid = useMemo(() => /android/i.test(navigator.userAgent || ''), []);
   const isIOS = useMemo(() => /iphone|ipad|ipod/i.test(navigator.userAgent || ''), []);
 
   // Textarea ref for cursor-aware markdown insertion
@@ -919,8 +918,8 @@ export function DocumentViewerModal({
                     <span className="hidden sm:inline">{pdfFit ? 'Default View' : 'Expand View'}</span>
                   </button>
 
-                  {/* Android: open in native PDF app via download link */}
-                  {isAndroid && file && (
+                  {/* Mobile: open in native PDF app via download link */}
+                  {isMobile && file && (
                     <a
                       href={blobUrl}
                       download={file.name}
@@ -944,47 +943,49 @@ export function DocumentViewerModal({
                 </div>
               </div>
 
-              {/* iOS Safari: iframe renders PDF natively */}
-              {isIOS ? (
-                <iframe
-                  src={blobUrl}
-                  title={file?.name}
-                  className="w-full flex-1 bg-white border-0"
-                  style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
-                />
-              ) : isAndroid ? (
-                /* Android Chrome: no inline PDF support — show a clean open-in-app card */
-                <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#0f0e0d] space-y-5">
-                  <div className="w-16 h-16 border border-[#90caf9]/40 bg-[#90caf9]/10 rounded-full flex items-center justify-center mx-auto">
-                    <Smartphone className="w-8 h-8 text-[#90caf9]" />
+              {/* Mobile: use iframe for iOS, download/open-in-app for Android and other mobile browsers */}
+              {isMobile ? (
+                isIOS ? (
+                  <iframe
+                    src={blobUrl}
+                    title={file?.name}
+                    className="w-full flex-1 bg-white border-0"
+                    style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+                  />
+                ) : (
+                  /* Android and other mobile browsers: show open-in-app card */
+                  <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#0f0e0d] space-y-5">
+                    <div className="w-16 h-16 border border-[#90caf9]/40 bg-[#90caf9]/10 rounded-full flex items-center justify-center mx-auto">
+                      <Smartphone className="w-8 h-8 text-[#90caf9]" />
+                    </div>
+                    <div>
+                      <span className="font-space-mono text-[10px] text-[#90caf9] uppercase tracking-widest block mb-1">PDF Document</span>
+                      <h4 className="font-garamond text-[22px] text-[#e6e2e0]">{file?.name}</h4>
+                    </div>
+                    <p className="font-space-mono text-[11px] text-[#cdc5bd] leading-relaxed max-w-xs">
+                      Mobile browsers don't support inline PDF preview. Tap below to open the decrypted PDF directly in your PDF reader app.
+                    </p>
+                    {file && (
+                      <a
+                        href={blobUrl}
+                        download={file.name}
+                        className="px-6 py-3 bg-[#90caf9] text-[#0e0d0c] font-space-mono text-[11px] font-bold uppercase tracking-widest inline-flex items-center gap-2 cursor-pointer transition hover:bg-[#bbdefb]"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Open in PDF App</span>
+                      </a>
+                    )}
+                    {file && (
+                      <button
+                        onClick={() => downloadFile(file)}
+                        className="px-5 py-2 border border-[#4b4640] text-[#cdc5bd] font-space-mono text-[11px] inline-flex items-center gap-2 cursor-pointer transition hover:text-[#e6e2e0]"
+                      >
+                        <Download className="w-3.5 h-3.5" />
+                        <span>Save Decrypted Copy</span>
+                      </button>
+                    )}
                   </div>
-                  <div>
-                    <span className="font-space-mono text-[10px] text-[#90caf9] uppercase tracking-widest block mb-1">PDF Document</span>
-                    <h4 className="font-garamond text-[22px] text-[#e6e2e0]">{file?.name}</h4>
-                  </div>
-                  <p className="font-space-mono text-[11px] text-[#cdc5bd] leading-relaxed max-w-xs">
-                    Android Chrome doesn't support inline PDF preview. Tap below to open the decrypted PDF directly in your PDF reader app.
-                  </p>
-                  {file && (
-                    <a
-                      href={blobUrl}
-                      download={file.name}
-                      className="px-6 py-3 bg-[#90caf9] text-[#0e0d0c] font-space-mono text-[11px] font-bold uppercase tracking-widest inline-flex items-center gap-2 cursor-pointer transition hover:bg-[#bbdefb]"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      <span>Open in PDF App</span>
-                    </a>
-                  )}
-                  {file && (
-                    <button
-                      onClick={() => downloadFile(file)}
-                      className="px-5 py-2 border border-[#4b4640] text-[#cdc5bd] font-space-mono text-[11px] inline-flex items-center gap-2 cursor-pointer transition hover:text-[#e6e2e0]"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      <span>Save Decrypted Copy</span>
-                    </button>
-                  )}
-                </div>
+                )
               ) : (
                 /* Desktop: object tag with #zoom fragment */
                 <object
