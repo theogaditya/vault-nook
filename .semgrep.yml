@@ -1,0 +1,32 @@
+rules:
+  - id: no-raw-vmk-logging
+    patterns:
+      - pattern-either:
+          - pattern: console.log(..., $KEY, ...)
+          - pattern: console.info(..., $KEY, ...)
+          - pattern: console.error(..., $KEY, ...)
+      - pattern-regex: "(?i).*(vmk|masterkey|rawkey|secretkey|filewrappingkey|filekey).*"
+    message: "CRITICAL: Potential logging of Vault Master Key (VMK) or raw cryptographic key material. Zero-knowledge guarantee violated!"
+    languages: [typescript, javascript]
+    severity: ERROR
+
+  - id: enforce-webcrypto-gcm
+    patterns:
+      - pattern: "crypto.subtle.encrypt({name: 'AES-GCM', ...}, ...)"
+    message: "INFO: Verified usage of AES-256-GCM WebCrypto primitive."
+    languages: [typescript, javascript]
+    severity: INFO
+
+  - id: check-turnstile-token-verification
+    patterns:
+      - pattern: 'fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", ...)'
+    message: "INFO: Cloudflare Turnstile token verification endpoint invoked."
+    languages: [typescript, javascript]
+    severity: INFO
+
+  - id: argon2id-worker-derivation
+    patterns:
+      - pattern: "deriveArgon2idKey($PASSPHRASE, $SALT)"
+    message: "INFO: Memory-hard Argon2id key derivation Web Worker invoked."
+    languages: [typescript, javascript]
+    severity: INFO

@@ -1,0 +1,40 @@
+{
+  "name": "myvault",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && tsc --noEmit",
+    "preview": "vite preview",
+    "deploy": "vite build && wrangler deploy",
+    "d1:migrate": "wrangler d1 migrations apply myvault-db --remote",
+    "d1:migrate:local": "wrangler d1 migrations apply myvault-db --local"
+  },
+  "dependencies": {
+    "@simplewebauthn/browser": "^13.1.0",
+    "@simplewebauthn/server": "^13.1.1",
+    "@types/jszip": "^3.4.0",
+    "docx-preview": "^0.4.0",
+    "hash-wasm": "^4.12.0",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.475.0",
+    "mammoth": "^1.12.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250214.0",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.1",
+    "wrangler": "^3.110.0"
+  }
+}
